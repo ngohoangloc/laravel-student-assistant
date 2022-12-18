@@ -26,7 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('college_id');
             $table->foreign("college_id")->references("id")->on("colleges");
             $table->timestamps();
-            $table->timestamp("deleted_at")->nullable(true);
+            $table->softDeletes();
         });
     }
 

@@ -16,7 +16,7 @@ class JobController extends Controller
     }
 
     public function index() {
-        $jobs = $this->job->latest()->paginate(5);
+        $jobs = $this->job->latest()->simplePaginate(5);
         return view('admin.pages.job.index', compact('jobs'));
     }
 
@@ -35,7 +35,7 @@ class JobController extends Controller
             'job_type' => $request->job_type,
             'job_level' => $request->job_level,
             'salary' => $request->salary,
-            'user_id' => 1,
+            'user_id' => session()->get('user_id'),
             'job_description' => $request->job_description,
             'job_requirement' => $request->job_requirement,
 
@@ -60,6 +60,7 @@ class JobController extends Controller
             'job_type' => $request->job_type,
             'job_level' => $request->job_level,
             'salary' => $request->salary,
+            'user_id' => session()->get('user_id'),
             'job_description' => $request->job_description,
             'job_requirement' => $request->job_requirement,
         ]);

@@ -21,7 +21,7 @@ class ScholarshipController extends Controller
 
     public function index() {
         $colleges = $this->college->all();
-        $scholarships = $this->scholarship->latest()->paginate(5);
+        $scholarships = $this->scholarship->latest()->simplePaginate(5);
         return view('admin.pages.scholarship.index', compact('scholarships', 'colleges'));
     }
 
@@ -33,6 +33,7 @@ class ScholarshipController extends Controller
 
     public function store(Request $request)
     {
+        $scholarship = new Scholarship();
         $this->scholarship->create([
             'name' => $request->name,
             'quantity' => $request->quantity,
@@ -40,9 +41,10 @@ class ScholarshipController extends Controller
             'description' => $request->description,
             'documents' => $request->documents,
             'application_deadline' => $request->application_deadline,
-            'user_id' => 1,
+            'user_id' => session()->get('user_id'),
             'college_id' => $request->college_id,
         ]);
+
         return redirect()->route('scholarships.index');
     }
 
@@ -63,7 +65,7 @@ class ScholarshipController extends Controller
             'description' => $request->description,
             'documents' => $request->documents,
             'application_deadline' => $request->application_deadline,
-            'user_id' => 1,
+            'user_id' => session()->get('user_id'),
             'college_id' => $request->college_id,
         ]);
         return redirect()->route('scholarships.index');
